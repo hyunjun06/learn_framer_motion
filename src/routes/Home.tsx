@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useRef } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -20,6 +21,18 @@ const Container = styled.div`
 	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 `;
 
+const BoxContainer = styled.div`
+    display: flex;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(141, 80, 201, 0.1);
+    border-radius: 40px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`
+
 const Box = styled(motion.div)`
     background-color: white;
     border-radius: 40px;
@@ -31,21 +44,29 @@ const Box = styled(motion.div)`
 `;
 
 const variants ={
-    whileHover: {
+    hover: {
         scale: 1.5,
         rotateZ: 90,
     },
-    whileClick: {
+    click: {
         scale: 1,
         rotateZ: 0,
         borderRadius: "50%",
-    }
+    },
 }
 
 function Home() {
+    const boxContainer = useRef<HTMLDivElement>(null);
+
     return (
 		<Container>
-			<Box variants={variants} whileHover="whileHover" whileTap="whileClick" />
+			<BoxContainer ref={boxContainer}>
+				<Box
+					drag
+					variants={variants}
+					dragConstraints={boxContainer}
+				/>
+			</BoxContainer>
 		</Container>
 	);
 }
