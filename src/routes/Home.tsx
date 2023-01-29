@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 const Box = styled(motion.div)`
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: white;
     border-radius: 40px;
     width: 200px;
     height: 200px;
@@ -30,55 +30,22 @@ const Box = styled(motion.div)`
     grid-template-columns: repeat(2, 1fr);
 `;
 
-const Circle = styled(motion.div)`
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: white;
-    place-self: center;
-`
-
 const variants ={
-    initial: {
-        scale: 0,
+    whileHover: {
+        scale: 1.5,
+        rotateZ: 90,
     },
-    final: {
+    whileClick: {
         scale: 1,
-        transition: {
-            delay: .5,
-            duration: 1,
-            type: "spring",
-            bounce: 0.5,
-            delayChildren: 1,
-            staggerChildren: 0.2,
-        }
+        rotateZ: 0,
+        borderRadius: "50%",
     }
 }
 
-const circleVariants = {
-    initial: {
-        opacity: 0,
-        y: -200,
-    },
-    final: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 1,
-            type: "spring",
-            bounce: 0.5,
-        },
-    }
-}
 function Home() {
     return (
 		<Container>
-			<Box variants={variants} initial="initial" animate="final">
-                <Circle variants={circleVariants} />
-                <Circle variants={circleVariants} />
-                <Circle variants={circleVariants} />
-                <Circle variants={circleVariants} />
-            </Box>
+			<Box variants={variants} whileHover="whileHover" whileTap="whileClick" />
 		</Container>
 	);
 }
