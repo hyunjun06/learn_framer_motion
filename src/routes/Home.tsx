@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -43,30 +42,13 @@ const Box = styled(motion.div)`
     grid-template-columns: repeat(2, 1fr);
 `;
 
-const variants ={
-    hover: {
-        scale: 1.5,
-        rotateZ: 90,
-    },
-    click: {
-        scale: 1,
-        rotateZ: 0,
-        borderRadius: "50%",
-    },
-}
-
 function Home() {
-    const boxContainer = useRef<HTMLDivElement>(null);
+    const x = useMotionValue(0);
+    const rotate = useTransform(x, [-800, 800], [-360, 360]);
 
     return (
 		<Container>
-			<BoxContainer ref={boxContainer}>
-				<Box
-					drag
-					variants={variants}
-					dragConstraints={boxContainer}
-				/>
-			</BoxContainer>
+            <Box style={{ x, rotate }} drag="x" dragSnapToOrigin />
 		</Container>
 	);
 }
