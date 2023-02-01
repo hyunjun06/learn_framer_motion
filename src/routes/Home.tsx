@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -6,7 +6,7 @@ const Container = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 100vh;
+	height: 300vh;
 	background: #b993d6; /* fallback for old browsers */
 	background: -webkit-linear-gradient(
 		to right,
@@ -23,32 +23,33 @@ const Container = styled.div`
 const BoxContainer = styled.div`
     display: flex;
     overflow: hidden;
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     background-color: rgba(141, 80, 201, 0.1);
     border-radius: 40px;
-    align-items: center;
-    justify-content: center;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+    position: fixed;
+    top: calc(50% - 100px);
 `
 
 const Box = styled(motion.div)`
     background-color: white;
-    border-radius: 40px;
     width: 200px;
     height: 200px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    transform-origin: 50% 100%;
 `;
 
 function Home() {
-    const x = useMotionValue(0);
-    const rotate = useTransform(x, [-800, 800], [-360, 360]);
+    const { scrollYProgress : scaleY } = useScroll();
 
     return (
 		<Container>
-            <Box style={{ x, rotate }} drag="x" dragSnapToOrigin />
+			<BoxContainer>
+				<Box style={{ scaleY }} drag="x" dragSnapToOrigin />
+			</BoxContainer>
 		</Container>
 	);
 }
